@@ -37,6 +37,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   my_new_project:
+    +materialized: table
     # Applies to all files under models/example/
-    example:
-      +materialized: table
+    staging:
+      +materialized: view
+      +schema: '{{ env_var("DBT_SILVER_SCHEMA","SILVER_DEFAULT") }}'
+    marts:
+      +schema: '{{ env_var("DBT_GOLD_SCHEMA","GOLD_DEFAULT") }}'
